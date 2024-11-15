@@ -38,6 +38,13 @@ class User(AbstractBaseUser):
     def __str__(self):
         return self.name
 
+class Client(models.Model):
+    user = models.OneToOneField(User,on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.user.name} - Client" 
+    
+
 class Producer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     bio = models.TextField(blank=True, null=True)
