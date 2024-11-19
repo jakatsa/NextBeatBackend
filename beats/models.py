@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils.text import slugify
-
+from users.models import Producer 
 
 class Category(models.Model):
     name = models.CharField(max_length=100, unique=True)
@@ -26,6 +26,7 @@ class Beat(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     created_at = models.DateTimeField(auto_now_add=True)
     categories = models.ManyToManyField(Category, related_name='beats', blank=True)
+    producer =models.ForeignKey(Producer,on_delete=models.CASCADE, related_name="producer" , default=1)
     
     def save(self, *args, **kwargs):
         if not self.slug:  # Generate slug only if it's not provided

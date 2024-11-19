@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Category, Beat, License
+from .models import Category, Beat, License,Producer
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -8,6 +8,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
 class BeatSerializer(serializers.ModelSerializer):
     categories = serializers.PrimaryKeyRelatedField(many=True, queryset=Category.objects.all())  # Writable field
+    user_name = serializers.CharField(source='producer.user_name', read_only=True)
 
     class Meta:
         model = Beat

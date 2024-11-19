@@ -28,7 +28,7 @@ class User(AbstractBaseUser):
     email = models.EmailField(unique=True)
     role = models.CharField(max_length=10, choices=PROFILE_CHOICES, default='client')  # Use role choices
     is_staff = models.BooleanField(default=False)  # Add this to enable admin access
-    date_joined = models.DateTimeField(auto_now_add=True)  # Optional: To track when the user joined
+  
 
     objects = UserManager()  # Link the custom manager
 
@@ -53,6 +53,7 @@ class Producer(models.Model):
     social_links = models.JSONField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    user_name=models.TextField(blank=True, null=True)
 
     def __str__(self):
         return f"{self.user.name} - Producer"
