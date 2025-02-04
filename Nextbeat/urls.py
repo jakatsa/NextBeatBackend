@@ -16,6 +16,7 @@ urlpatterns = [
     path('users/', include(users.urls)),
   #  path('settings/', include(settings.urls)),
     path('relationships/', include(user_relationships.urls)),
+    path("api/",include("users.urls"))
 ]
 # Add this to serve media files during development
 if settings.DEBUG:
