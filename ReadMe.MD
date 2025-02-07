@@ -12,21 +12,24 @@ NextBeat is a beat-selling application designed for music creators and enthusias
   - List and retrieve beats.
   - Add new beats (vendor-only).
   - Enhanced user experience with dynamic filtering.
+  - Playing beats online
 - **Cart Functionality**:
   - Add beats to a shopping cart for streamlined purchases.
+  - **User Authentication**:
+  - User registration and login capabilities using JWT.
 
 ### Planned Features
 
-- **User Authentication**:
-  - User registration and login capabilities.
 - **Payment System Integration**:
   - Support for payment gateways like Mpesa and PayPal.
 - **Order Management**:
-  - Cart functionality and checkout process.
-- **Vendor Dashboard**:
-  - Manage products and orders.
-- **Client Dashboard**:
-  - Under development to improve the user experience.
+  - checkout process.
+- **Messaging Features**:
+  - Implementaion of a messaging dashboaord allowing clients to interact.
+
+**User Relationshhip Features**:
+
+- users are able to follow each other.
 
 ## Dependencies
 
@@ -48,7 +51,6 @@ NextBeat
 ├── Nextbeat             # Django project directory
 ├── beats                # Beat-related models, views, and templates
 ├── db.sqlite3           # SQLite database
-├── env                  # Virtual environment directory
 ├── frontend             # Frontend assets and configurations
 ├── manage.py            # Django management script
 ├── orders               # Order management app

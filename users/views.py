@@ -27,7 +27,7 @@ class MyTokenObtainPairView(TokenObtainPairView):
 class RegisterView(generics.CreateAPIView):
     permission_classes=[AllowAny]
     serializer_class =RegisterSerializer
-
+#function to test if the user is authenticated 
 @api_view(['GET','POST'])
 @permission_classes([IsAuthenticated])
 def dashboard(request):

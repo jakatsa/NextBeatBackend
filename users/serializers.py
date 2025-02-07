@@ -13,6 +13,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
         token = super().get_token(user)
+        token['userType'] = user.role   
 
         # Safe access to related objects
         profile = getattr(user, 'profile', None)
@@ -54,20 +55,22 @@ class ClientSerializer(serializers.ModelSerializer):
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
-        fields = '__all__'    
+        fields = '__all__'
         read_only_fields = ['image']    
 
 class RegisterSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True, required=True, validators=[validate_password]) 
-    password2 = serializers.CharField(write_only=True, required=True)   
-    role = serializers.ChoiceField(choices=User.PROFILE_CHOICES, required=True)   
+    password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
+    password2 = serializers.CharField(write_only=True, required=True)
+    role = serializers.ChoiceField(choices=User.PROFILE_CHOICES, required=True)
     user_name = serializers.CharField(required=False)  # Optional for producers
     contacts = serializers.CharField(required=False)  # Optional for producers
     bank_details = serializers.CharField(required=False)  # Optional for producers
+    bio = serializers.CharField(required=False)
+    image = serializers.ImageField(required=False, allow_null=True)
 
     class Meta:
         model = User
-        fields = ['name', 'email', 'password', 'password2', 'role', 'user_name', 'contacts', 'bank_details']
+        fields = ['name', 'email', 'password', 'password2', 'role', 'user_name', 'contacts', 'bank_details', 'bio', 'image']
 
     def validate(self, attrs):
         if attrs['password'] != attrs['password2']:
@@ -76,16 +79,25 @@ class RegisterSerializer(serializers.ModelSerializer):
         if User.objects.filter(email=attrs['email']).exists():
             raise serializers.ValidationError({"email": "A user with this email already exists."})
         
-        return attrs                
+        return attrs
 
     def create(self, validated_data):
+        image = validated_data.pop('image', None)
+        bio = validated_data.pop('bio', '')
+
         user = User.objects.create(
             name=validated_data['name'],
             email=validated_data['email'],
             role=validated_data['role']
-        )    
+        )
         user.set_password(validated_data['password'])  # Hash password
         user.save()
+
+        # Create or update the Profile
+        profile, created = Profile.objects.get_or_create(user=user)
+        profile.image = image
+        profile.bio = bio
+        profile.save()
 
         # Create related objects based on role
         if user.role == 'producer':
@@ -98,7 +110,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         elif user.role == 'client':
             Client.objects.create(
                 user=user,
-                user_name=validated_data.get('user_name', '')  # Assign user_name to Client
+                user_name=validated_data.get('user_name', '')
             )
 
         return user
