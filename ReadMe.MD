@@ -10,7 +10,7 @@ NextBeat is a beat-selling application designed for music creators and enthusias
 
 - **Beat Management**:
   - List and retrieve beats.
-  - Add new beats (vendor-only).
+  - Add new beats (producer-only).
   - Enhanced user experience with dynamic filtering.
   - Playing beats online
 - **Cart Functionality**:
