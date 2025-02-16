@@ -26,7 +26,7 @@ class Beat(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     created_at = models.DateTimeField(auto_now_add=True)
     categories = models.ManyToManyField(Category, related_name='beats', blank=True)
-    producer =models.ForeignKey(Producer,on_delete=models.CASCADE, related_name="producer" , default=1)
+    producer =models.ForeignKey(Producer,on_delete=models.CASCADE, related_name="producer" , default=1) #remove default one 
     
     def save(self, *args, **kwargs):
         if not self.slug:  # Generate slug only if it's not provided

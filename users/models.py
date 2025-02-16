@@ -87,7 +87,6 @@ class Profile(models.Model):
     def __str__(self):
         return f"{self.user.name} - {self.full_name}"
 
-
 # Automatically create a profile for a user
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
@@ -99,3 +98,6 @@ def create_user_profile(sender, instance, created, **kwargs):
 def save_user_profile(sender, instance, **kwargs):
     if hasattr(instance, 'profile'):
         instance.profile.save()
+
+
+

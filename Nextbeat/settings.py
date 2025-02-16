@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'users',
     'orders',
     'beats',
+    'chat',
     'user_relationships',
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
@@ -122,7 +123,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
          'OPTIONS': {
-            'timeout': 20,  # Optional: Prevent locking issues
+            'timeout': 20,  # Optional: Prevent locking 
+         
+          
         },
     }
 }
